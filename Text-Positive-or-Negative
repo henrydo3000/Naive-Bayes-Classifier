@@ -1,0 +1,29 @@
+from texts import text_counter, text_training
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.naive_bayes import MultinomialNB
+
+# imports several methods from libraries.
+# libraries are texts, sklearn.feature_extraction.text, sklearn.naive_bayes
+# methods are text_counter, text_training, CountVectorizer, MultinomialNB
+
+
+
+intercepted_text = "Bullshit" 		
+# assigns variable a string to be analyzed. Feel free to assign a list of strings to output a list of ML classifications.
+
+
+text_counts = text_counter.transform([intercepted_text]) 
+# uses the method, text_counter, and accesses its transform function with the value of the variable intercepted_text, and outputs a number based on the method and function's formula.
+
+text_classifier = MultinomialNB()
+#assigns a variable the function MultinomialNB(), a method taken from the sklearn.naives_bayes libary. For instruction on paramters and attributes Refer to https://scikit-learn.org/stable/modules/generated/sklearn.naive_bayes.MultinomialNB.html
+
+text_labels = [0] * 1000 + [1] * 1000
+text_classifier.fit(text_training, text_labels)
+final_pos = text_classifier.predict_proba(text_counts)[0][1]
+final_neg = text_classifier.predict_proba(text_counts)[0][0]
+
+if final_pos > final_neg:
+  print("The text is positive.")
+else:
+  print("The text is negative.")
